@@ -4,7 +4,13 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
+network-traffic-packet-pcap4j/.idea
 .idea
+.idea/
+.idea/.gitignore
+.idea/encodings.xml
+.idea/misc.xml
+.idea/vcs.xml
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
