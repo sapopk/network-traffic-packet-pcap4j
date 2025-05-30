@@ -11,8 +11,15 @@ import org.pcap4j.core.PcapHandle;
 import org.pcap4j.core.PcapNativeException;
 import org.pcap4j.core.PcapNetworkInterface;
 import org.pcap4j.core.Pcaps;
+import org.pcap4j.packet.EthernetPacket;
+import org.pcap4j.packet.IpV4Packet;
+import org.pcap4j.packet.Packet;
 
 import project.NetworkInterfaces.Packet.PacketLogger;
+import project.NetworkInterfaces.Packet.Ethernet.EthernetHeader;
+import project.NetworkInterfaces.Packet.IPV4.IPV4Flag;
+import project.NetworkInterfaces.Packet.IPV4.IPV4Header;
+import project.NetworkInterfaces.Packet.IPV4.TypeOfService;
 
 public class NetworkService {
     private List<PacketLogger> packetLoggers = new CopyOnWriteArrayList<>();
@@ -51,10 +58,10 @@ public class NetworkService {
                     PacketLogger logger = new PacketLogger();
                     logger.setTimeStamp(handler.getTimestamp().toString());
 
-                    //TODO : Add 'Set' values from packet to OOPs.
-                    
+                    setEthernetHeader(packet, logger);
+
                     packetLoggers.add(logger);
-                }
+                };
 
                 handler.loop(10, packetListener);
                 handler.close();
@@ -63,5 +70,57 @@ public class NetworkService {
                 throw new RuntimeException(exception);
             }
         }).start();
+    }
+
+
+    public void setEthernetHeader(Packet packet, PacketLogger logger) {
+        EthernetPacket ethernetPacket = packet.get(EthernetPacket.class);
+
+        if(ethernetPacket != null) {
+            EthernetHeader ethernetHeader = new EthernetHeader(
+                ethernetPacket.getHeader().getSrcAddr().toString(),
+                ethernetPacket.getHeader().getDstAddr().toString(),
+                ethernetPacket.getHeader().getType().toString()
+            );
+
+            logger.setEthernetHeader(ethernetHeader);
+        }
+    }
+
+    public void setIPv4Header(Packet packet, PacketLogger logger) {
+        IpV4Packet ipV4Packet = packet.get(IpV4Packet.class);
+
+        if(ipV4Packet != null) {
+            
+            String checkSumvalue = "0x" + Integer.toHexString(ipV4Packet.getHeader().getHeaderChecksum());
+
+            IPV4Flag ipv4Flag = new IPV4Flag(
+                ipV4Packet.getHeader().getReservedFlag(),
+                ipV4Packet.getHeader().getDontFragmentFlag(),
+                ipV4Packet.getHeader().getMoreFragmentFlag()
+            );
+
+            TypeOfService typeOfService = new TypeOfService(
+                ipV4Packet.getHeader().getTos().value(),
+                ipV4Packet.getHeader().getTos().value(),
+                ipV4Packet.getHeader().getTos().value()
+            );
+
+            // TODO : Complete IPV4Header
+            IPV4Header ipv4Header = new IPV4Header(
+                ipV4Packet.getHeader().getVersion().value(),
+                ipV4Packet.getHeader().getIhl(),
+                ipV4Packet.getHeader().getTotalLength(),
+                ipV4Packet.getHeader().getIdentificationAsInt(),
+                ipV4Packet.getHeader().getFragmentOffset(),
+                ipV4Packet.getHeader().getTtl(),
+                ipV4Packet.getHeader().getProtocol().value(),
+                checkSumvalue,
+                ipV4Packet.getHeader().getSrcAddr().getHostAddress(),
+                ipV4Packet.getHeader().getDstAddr().getHostAddress(),
+                ipv4Flag,
+                typeOfService
+            );
+        }
     }
 }

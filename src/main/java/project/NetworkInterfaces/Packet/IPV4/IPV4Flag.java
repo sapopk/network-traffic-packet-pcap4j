@@ -7,7 +7,11 @@ public class IPV4Flag {
 
     public IPV4Flag() {}
 
-    public IPV4Flag(boolean reserved, boolean dontFragment, boolean moreFragments) {
+    public IPV4Flag(
+        boolean reserved, 
+        boolean dontFragment, 
+        boolean moreFragments
+    ) {
         this.reserved = reserved;
         this.dontFragment = dontFragment;
         this.moreFragments = moreFragments;
