@@ -8,16 +8,16 @@ public class TCPFlag {
     private boolean SYN;
     private boolean FIN;
 
-    public TCPFlag() {}
+    public TCPFlag() {
+    }
 
     public TCPFlag(
-        boolean URG, 
-        boolean ACK, 
-        boolean PSH, 
-        boolean RST,
-        boolean SYN, 
-        boolean FIN
-    ) {
+            boolean URG,
+            boolean ACK,
+            boolean PSH,
+            boolean RST,
+            boolean SYN,
+            boolean FIN) {
         this.URG = URG;
         this.ACK = ACK;
         this.PSH = PSH;
@@ -26,7 +26,7 @@ public class TCPFlag {
         this.FIN = FIN;
     }
 
-    //Getters & Setters
+    // Getters & Setters
     public boolean isURG() {
         return this.URG;
     }
@@ -46,7 +46,7 @@ public class TCPFlag {
     public boolean isPSH() {
         return this.PSH;
     }
-    
+
     public void setPSH(boolean PSH) {
         this.PSH = PSH;
     }
@@ -73,5 +73,18 @@ public class TCPFlag {
 
     public void setFIN(boolean FIN) {
         this.FIN = FIN;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "[ \n" +
+                "\t URG: " + isURG() + ", \n" +
+                "\t ACK: " + isACK() + ", \n" +
+                "\t PSH: " + isPSH() + ", \n" +
+                "\t RST: " + isRST() + ", \n" +
+                "\t SYN: " + isSYN() + ", \n" +
+                "\t FIN: " + isFIN() + ", \n" +
+            "]";
     }
 }

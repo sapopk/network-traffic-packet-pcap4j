@@ -26,7 +26,7 @@ public class EthernetHeader {
         this.sourceAddress = sourceAddress;
     }
 
-    public String getSourceAddress(String sourceAddress) {
+    public String getSourceAddress() {
         return this.sourceAddress;
     }
 
@@ -36,5 +36,15 @@ public class EthernetHeader {
 
     public String getType() {
         return this.type;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "[ \n" +
+                "\t Destination Address: " + getDestinationAddress() + ", \n" +
+                "\t Source Address: " + getSourceAddress() + ", \n" +
+                "\t Type: " + getType() + ", \n" +
+            "\b ]";
     }
 }

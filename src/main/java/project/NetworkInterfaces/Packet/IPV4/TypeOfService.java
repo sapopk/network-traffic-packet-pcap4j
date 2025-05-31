@@ -5,7 +5,8 @@ public class TypeOfService {
     private int typeOfService;
     private int mustBeZero;
 
-    public TypeOfService() {}
+    public TypeOfService() {
+    }
 
     public TypeOfService(int precendence, int typeOfService, int mustBeZero) {
         this.precendence = precendence;
@@ -13,7 +14,7 @@ public class TypeOfService {
         this.mustBeZero = mustBeZero;
     }
 
-    //Getters & Setters
+    // Getters & Setters
     public void setPrecendence(int precendence) {
         this.precendence = precendence;
     }
@@ -38,4 +39,13 @@ public class TypeOfService {
         return this.mustBeZero;
     }
 
+    @Override
+    public String toString() {
+        return 
+            "[ \n" +
+                "\t\t Precendence: " + getPrecendence() + ", \n" +
+                "\t\t Type of Service: " + getTypeOfService() + ", \n" +
+                "\t\t Must Be Zero: " + getMustBeZero() + ", \n" +
+            "\t]";
+    }
 }

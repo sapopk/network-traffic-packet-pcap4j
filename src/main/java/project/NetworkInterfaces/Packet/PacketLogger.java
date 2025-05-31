@@ -20,18 +20,18 @@ public class PacketLogger {
 
     private HexStream hexStream;
 
-    public PacketLogger() {}
+    public PacketLogger() {
+    }
 
     public PacketLogger(
-        String timeStamp, 
-        EthernetHeader ethernetHeader, 
-        IPV4Header ipv4Header, 
-        TCPHeader tcpHeader,
-        UDPHeader udpHeader, 
-        ICMPHeader icmpHeader, 
-        DNSHeader dnsHeader, 
-        HexStream hexStream
-    ) {
+            String timeStamp,
+            EthernetHeader ethernetHeader,
+            IPV4Header ipv4Header,
+            TCPHeader tcpHeader,
+            UDPHeader udpHeader,
+            ICMPHeader icmpHeader,
+            DNSHeader dnsHeader,
+            HexStream hexStream) {
         this.timeStamp = timeStamp;
         this.ethernetHeader = ethernetHeader;
         this.ipv4Header = ipv4Header;
@@ -42,7 +42,7 @@ public class PacketLogger {
         this.hexStream = hexStream;
     }
 
-    //Getters & Setters
+    // Getters & Setters
     public String getTimeStamp() {
         return this.timeStamp;
     }
@@ -105,5 +105,19 @@ public class PacketLogger {
 
     public void setHexStream(HexStream hexStream) {
         this.hexStream = hexStream;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "Packet Logger: { \n" +
+                "\b\b Time Stamp: " + getTimeStamp() + ",\n" +
+                "\b\b Ethernet Header: " + getEthernetHeader() + ",\n" +
+                "\b\b IPV4 Header: " + getIpv4Header() + ",\n" +
+                "\b\b UDP Header: " + getUdpHeader() + ",\n" +
+                "\b\b ICMP Header: " + getIcmpHeader() + ",\n" +
+                "\b\b DNS Header: " + getDnsHeader() + ",\n" +
+                "\b\b HEX Stream: " + getHexStream() + ",\n" +
+            "} \n";
     }
 }

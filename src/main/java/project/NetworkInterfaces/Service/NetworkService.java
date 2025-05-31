@@ -2,7 +2,6 @@ package project.NetworkInterfaces.Service;
 
 import java.net.InetAddress;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.pcap4j.core.NotOpenException;
 import org.pcap4j.core.PacketListener;
@@ -18,7 +17,6 @@ import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.UdpPacket;
-import org.pcap4j.packet.IcmpV4CommonPacket.IcmpV4CommonHeader;
 
 import project.NetworkInterfaces.Packet.PacketLogger;
 import project.NetworkInterfaces.Packet.Ethernet.EthernetHeader;
@@ -33,11 +31,14 @@ import project.NetworkInterfaces.Packet.Protocol.TCPHeader;
 import project.NetworkInterfaces.Packet.Protocol.UDPHeader;
 
 public class NetworkService {
-    private List<PacketLogger> packetLoggers = new CopyOnWriteArrayList<>();
-    private String targetIPAddress = "";
 
-    public List<PacketLogger> getPackerLoggers() {
-        return this.packetLoggers;
+    private PacketLogger packetLogger = new PacketLogger();
+    private String TARGET_IP_ADDRESS = ""; // Paste your IP address here
+
+    public NetworkService() {}
+
+    public NetworkService(PacketLogger logger) {
+        this.packetLogger = logger;
     }
 
     public void startNetworkTrafficPacketCapture() {
@@ -49,7 +50,7 @@ public class NetworkService {
                 for (PcapNetworkInterface listOfDevs : listOfAllInterfaces) {
                     for (PcapAddress address : listOfDevs.getAddresses()) {
                         if (address.getAddress() instanceof InetAddress
-                                && address.getAddress().getHostAddress().equals(targetIPAddress)) {
+                                && address.getAddress().getHostAddress().equals(TARGET_IP_ADDRESS)) {
                             interfaceDevices = listOfDevs;
                             break;
                         }
@@ -61,22 +62,25 @@ public class NetworkService {
                 }
 
                 if (interfaceDevices == null) {
-                    System.err.println("No interface device has been found for address: " + targetIPAddress);
+                    System.err.println("No interface device has been found for address: " + TARGET_IP_ADDRESS);
                 }
 
                 PcapHandle handler = interfaceDevices.openLive(65536, PcapNetworkInterface.PromiscuousMode.PROMISCUOUS,
                         1000);
 
                 PacketListener packetListener = packet -> {
-                    PacketLogger logger = new PacketLogger();
-                    logger.setTimeStamp(handler.getTimestamp().toString());
+                    packetLogger.setTimeStamp(handler.getTimestamp().toString());
 
-                    setEthernetPacket(packet, logger);
-
-                    packetLoggers.add(logger);
+                    setEthernetPacket(packet, packetLogger);
+                    setIPv4Packet(packet, packetLogger);
+                    setTCPPacket(packet, packetLogger);
+                    setUDPPacket(packet, packetLogger);
+                    setDNSPacket(packet, packetLogger);
+                    setICMPPacket(packet, packetLogger);
                 };
 
                 handler.loop(10, packetListener);
+                System.out.print(packetLogger.toString());
                 handler.close();
 
             } catch (PcapNativeException | InterruptedException | NotOpenException exception) {
@@ -176,7 +180,7 @@ public class NetworkService {
         StringBuffer builder = new StringBuffer();
 
         for (byte b : bytes) {
-            builder.append(String.format("%20x", b)).append(" ");
+            builder.append(String.format("%4x", b)).append("");
         }
 
         return builder.toString().trim();

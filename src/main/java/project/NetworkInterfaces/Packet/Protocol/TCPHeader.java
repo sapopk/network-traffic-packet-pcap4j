@@ -12,20 +12,20 @@ public class TCPHeader {
     private int urgentPointer;
     private TCPFlag flags;
 
-    public TCPHeader() {}
+    public TCPHeader() {
+    }
 
     public TCPHeader(
-        int sourcePort, 
-        int destinationPort, 
-        long sequenceNumber, 
-        long acknowledgmentNumber,
-        int dataOffset, 
-        int reserved, 
-        int window, 
-        String checksum, 
-        int urgentPointer, 
-        TCPFlag flags
-    ) {
+            int sourcePort,
+            int destinationPort,
+            long sequenceNumber,
+            long acknowledgmentNumber,
+            int dataOffset,
+            int reserved,
+            int window,
+            String checksum,
+            int urgentPointer,
+            TCPFlag flags) {
         this.sourcePort = sourcePort;
         this.destinationPort = destinationPort;
         this.sequenceNumber = sequenceNumber;
@@ -38,7 +38,7 @@ public class TCPHeader {
         this.flags = flags;
     }
 
-    //Getters & Setters
+    // Getters & Setters
     public int getSourcePort() {
         return this.sourcePort;
     }
@@ -119,5 +119,19 @@ public class TCPHeader {
         this.flags = flags;
     }
 
-    
+    @Override
+    public String toString() {
+        return 
+            "[ \n" +
+                "\t Source Port: " + getSourcePort() + ", \n" +
+                "\t Destionation Port: " + getDestinationPort() + ", \n" +
+                "\t Acknowledgment Number: " + getAcknowledgmentNumber() + ", \n" +
+                "\t Data Offset: " + getDataOffset() + ", \n" +
+                "\t Reserved: " + getReserved() + ", \n" +
+                "\t Window: " + getWindow() + ", \n" +
+                "\t Checksum: " + getChecksum() + ", \n" +
+                "\t Urgent Pointer: " + getUrgentPointer() + ", \n" +
+                "\t Flags: " + getFlags() + ", \n" +
+            "]";
+    }
 }

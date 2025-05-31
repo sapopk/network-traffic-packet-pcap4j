@@ -5,19 +5,19 @@ public class IPV4Flag {
     private boolean dontFragment;
     private boolean moreFragments;
 
-    public IPV4Flag() {}
+    public IPV4Flag() {
+    }
 
     public IPV4Flag(
-        boolean reserved, 
-        boolean dontFragment, 
-        boolean moreFragments
-    ) {
+            boolean reserved,
+            boolean dontFragment,
+            boolean moreFragments) {
         this.reserved = reserved;
         this.dontFragment = dontFragment;
         this.moreFragments = moreFragments;
     }
 
-    //Getters & Setters
+    // Getters & Setters
     public void isReserved(boolean reserved) {
         this.reserved = reserved;
     }
@@ -40,5 +40,15 @@ public class IPV4Flag {
 
     public boolean getMoreFragments() {
         return this.moreFragments;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "[ \n" +
+                "\t\t Reserved: " + getReserved() + ", \n" +
+                "\t\t Dont Fragment: " + getDontFragment() + ", \n" +
+                "\t\t More Fragment: " + getMoreFragments() + ", \n" +
+            "\t]";
     }
 }

@@ -14,23 +14,23 @@ public class IPV4Header {
 
     private IPV4Flag flag;
     private TypeOfService typeOfService;
-    
-    public IPV4Header() {}
+
+    public IPV4Header() {
+    }
 
     public IPV4Header(
-        int version,
-        int internetHeaderLength,
-        int totalLength,
-        int identification,
-        int fragmentOffSet,
-        int timeToLive,
-        int protocol,
-        String headerCheckSum,
-        String sourceAddress,
-        String destinationAddress,
-        IPV4Flag flag,
-        TypeOfService typeOfService
-    ) {
+            int version,
+            int internetHeaderLength,
+            int totalLength,
+            int identification,
+            int fragmentOffSet,
+            int timeToLive,
+            int protocol,
+            String headerCheckSum,
+            String sourceAddress,
+            String destinationAddress,
+            IPV4Flag flag,
+            TypeOfService typeOfService) {
         this.version = version;
         this.internetHeaderLength = internetHeaderLength;
         this.totalLength = totalLength;
@@ -45,7 +45,7 @@ public class IPV4Header {
         this.typeOfService = typeOfService;
     }
 
-    //Getters & Setters
+    // Getters & Setters
     public void setVersion(int version) {
         this.version = version;
     }
@@ -118,7 +118,7 @@ public class IPV4Header {
         return this.sourceAddress;
     }
 
-    public void setDestinationAddress(String destinationAddress){
+    public void setDestinationAddress(String destinationAddress) {
         this.destinationAddress = destinationAddress;
     }
 
@@ -140,5 +140,24 @@ public class IPV4Header {
 
     public TypeOfService getTypeOfService() {
         return this.typeOfService;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "[ " +
+                "\n\t Version: " + getVersion() + ", \n" +
+                "\t Internet Header Length: " + getInternetHeaderLength() + ", \n" +
+                "\t Total Length: " + getTotalLength() + ", \n" +
+                "\t Identification: " + getIdentification() + ", \n" +
+                "\t Fragment Offset: " + getFragmentOffSet() + ", \n" +
+                "\t Time to Live: " + getTimeToLive() + ", \n" +
+                "\t Protocol: " + getProtocol() + ", \n" +
+                "\t Header Checksum: " + getHeaderCheckSum() + ", \n" +
+                "\t Source Address: " + getSourceAddress() + ", \n" +
+                "\t Destination Address: " + getDestinationAddress() + ", \n" +
+                "\t IPV4 Flag Header: " + getFlag() + ", \n" +
+                "\t Type of Service: " + getTypeOfService() + ", \n" +
+            "\b ]";
     }
 }

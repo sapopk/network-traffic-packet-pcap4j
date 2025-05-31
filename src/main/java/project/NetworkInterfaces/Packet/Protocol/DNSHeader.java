@@ -7,15 +7,15 @@ public class DNSHeader {
     private int questionCount;
     private int answerRecordCount;
 
-    public DNSHeader() {}
+    public DNSHeader() {
+    }
 
     public DNSHeader(
-        int transactionID,
-        String operationCode,
-        String responseCode,
-        int questionCount,
-        int answerRecordCount
-    ) {
+            int transactionID,
+            String operationCode,
+            String responseCode,
+            int questionCount,
+            int answerRecordCount) {
         this.transactionID = transactionID;
         this.operationCode = operationCode;
         this.responseCode = responseCode;
@@ -61,5 +61,17 @@ public class DNSHeader {
 
     public int getAnswerRecordCount() {
         return this.answerRecordCount;
+    }
+
+    @Override
+    public String toString() {
+        return 
+            "[ \n" +
+                "\t Transaction ID: " + getTransactionID() + ", \n" +
+                "\t Operation Code: " + getOperationCode() + ", \n" +
+                "\t Response Code: " + getResponseCode() + ", \n" +
+                "\t Question Count: " + getQuestionCount() + ", \n" +
+                "\t Answer Record Count: " + getAnswerRecordCount() + ", \n" +
+            "]";
     }
 }
