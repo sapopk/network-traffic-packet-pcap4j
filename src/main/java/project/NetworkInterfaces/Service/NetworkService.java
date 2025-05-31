@@ -11,6 +11,7 @@ import org.pcap4j.core.PcapHandle;
 import org.pcap4j.core.PcapNativeException;
 import org.pcap4j.core.PcapNetworkInterface;
 import org.pcap4j.core.Pcaps;
+import org.pcap4j.packet.DnsPacket;
 import org.pcap4j.packet.EthernetPacket;
 import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
@@ -23,6 +24,7 @@ import project.NetworkInterfaces.Packet.HEXStream.HexStream;
 import project.NetworkInterfaces.Packet.IPV4.IPV4Flag;
 import project.NetworkInterfaces.Packet.IPV4.IPV4Header;
 import project.NetworkInterfaces.Packet.IPV4.TypeOfService;
+import project.NetworkInterfaces.Packet.Protocol.DNSHeader;
 import project.NetworkInterfaces.Packet.Protocol.TCPFlag;
 import project.NetworkInterfaces.Packet.Protocol.TCPHeader;
 import project.NetworkInterfaces.Packet.Protocol.UDPHeader;
@@ -193,4 +195,21 @@ public class NetworkService {
             logger.setUdpHeader(udpHeader);
         }
     }
+
+    public void setDNSPacket(Packet packet, PacketLogger logger) {
+        DnsPacket dnsPacket = packet.get(DnsPacket.class);
+
+        if(dnsPacket != null) {
+            DNSHeader dnsHeader = new DNSHeader(
+                    dnsPacket.getHeader().getId(),
+                    dnsPacket.getHeader().getOpCode().name(),
+                    dnsPacket.getHeader().getrCode().name(),
+                    dnsPacket.getHeader().getQdCountAsInt(),
+                    dnsPacket.getHeader().getAnCount());
+
+                logger.setDnsHeader(dnsHeader);
+        }
+    }
+
+    
 }
