@@ -15,6 +15,7 @@ import org.pcap4j.packet.EthernetPacket;
 import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
+import org.pcap4j.packet.UdpPacket;
 
 import project.NetworkInterfaces.Packet.PacketLogger;
 import project.NetworkInterfaces.Packet.Ethernet.EthernetHeader;
@@ -24,6 +25,7 @@ import project.NetworkInterfaces.Packet.IPV4.IPV4Header;
 import project.NetworkInterfaces.Packet.IPV4.TypeOfService;
 import project.NetworkInterfaces.Packet.Protocol.TCPFlag;
 import project.NetworkInterfaces.Packet.Protocol.TCPHeader;
+import project.NetworkInterfaces.Packet.Protocol.UDPHeader;
 
 public class NetworkService {
     private List<PacketLogger> packetLoggers = new CopyOnWriteArrayList<>();
@@ -78,7 +80,7 @@ public class NetworkService {
         }).start();
     }
 
-    public void setEthernetHeader(Packet packet, PacketLogger logger) {
+    public void setEthernetPacket(Packet packet, PacketLogger logger) {
         EthernetPacket ethernetPacket = packet.get(EthernetPacket.class);
 
         if (ethernetPacket != null) {
@@ -91,7 +93,7 @@ public class NetworkService {
         }
     }
 
-    public void setIPv4Header(Packet packet, PacketLogger logger) {
+    public void setIPv4Packet(Packet packet, PacketLogger logger) {
         IpV4Packet ipV4Packet = packet.get(IpV4Packet.class);
 
         if (ipV4Packet != null) {
@@ -173,5 +175,22 @@ public class NetworkService {
         }
 
         return builder.toString().trim();
+    }
+
+    public void setUDPPacket(Packet packet, PacketLogger logger) {
+        UdpPacket udpPacket = packet.get(UdpPacket.class);
+
+        if (udpPacket != null) {
+
+            String checkSumValue = String.format("0x%04x", udpPacket.getHeader().getChecksum());
+
+            UDPHeader udpHeader = new UDPHeader(
+                    udpPacket.getHeader().getSrcPort().value(),
+                    udpPacket.getHeader().getDstPort().value(),
+                    udpPacket.getHeader().getLength(),
+                    checkSumValue);
+
+            logger.setUdpHeader(udpHeader);
+        }
     }
 }
