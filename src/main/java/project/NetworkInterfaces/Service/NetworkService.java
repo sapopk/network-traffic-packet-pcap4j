@@ -13,10 +13,12 @@ import org.pcap4j.core.PcapNetworkInterface;
 import org.pcap4j.core.Pcaps;
 import org.pcap4j.packet.DnsPacket;
 import org.pcap4j.packet.EthernetPacket;
+import org.pcap4j.packet.IcmpV4CommonPacket;
 import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.UdpPacket;
+import org.pcap4j.packet.IcmpV4CommonPacket.IcmpV4CommonHeader;
 
 import project.NetworkInterfaces.Packet.PacketLogger;
 import project.NetworkInterfaces.Packet.Ethernet.EthernetHeader;
@@ -25,6 +27,7 @@ import project.NetworkInterfaces.Packet.IPV4.IPV4Flag;
 import project.NetworkInterfaces.Packet.IPV4.IPV4Header;
 import project.NetworkInterfaces.Packet.IPV4.TypeOfService;
 import project.NetworkInterfaces.Packet.Protocol.DNSHeader;
+import project.NetworkInterfaces.Packet.Protocol.ICMPHeader;
 import project.NetworkInterfaces.Packet.Protocol.TCPFlag;
 import project.NetworkInterfaces.Packet.Protocol.TCPHeader;
 import project.NetworkInterfaces.Packet.Protocol.UDPHeader;
@@ -68,7 +71,7 @@ public class NetworkService {
                     PacketLogger logger = new PacketLogger();
                     logger.setTimeStamp(handler.getTimestamp().toString());
 
-                    setEthernetHeader(packet, logger);
+                    setEthernetPacket(packet, logger);
 
                     packetLoggers.add(logger);
                 };
@@ -211,5 +214,20 @@ public class NetworkService {
         }
     }
 
-    
+    public void setICMPPacket(Packet packet, PacketLogger logger) {
+        IcmpV4CommonPacket icmpPacket = packet.get(IcmpV4CommonPacket.class);
+
+        if(icmpPacket != null) {
+            String checkSumValue = String.format("0x04x", icmpPacket.getHeader().getChecksum());
+
+            ICMPHeader icmpHeader = new ICMPHeader(
+                icmpPacket.getHeader().getType().value(),
+                icmpPacket.getHeader().getCode().value(),
+                checkSumValue
+            );
+
+            logger.setIcmpHeader(icmpHeader);
+        }
+    }
+
 }
