@@ -11,6 +11,9 @@ public class IPV4Header {
     private String headerCheckSum;
     private String sourceAddress;
     private String destinationAddress;
+
+    private IPV4Flag flag;
+    private TypeOfService typeOfService;
     
     public IPV4Header() {}
 
@@ -24,7 +27,9 @@ public class IPV4Header {
         int protocol,
         String headerCheckSum,
         String sourceAddress,
-        String destinationAddress
+        String destinationAddress,
+        IPV4Flag flag,
+        TypeOfService typeOfService
     ) {
         this.version = version;
         this.internetHeaderLength = internetHeaderLength;
@@ -36,6 +41,8 @@ public class IPV4Header {
         this.headerCheckSum = headerCheckSum;
         this.sourceAddress = sourceAddress;
         this.destinationAddress = destinationAddress;
+        this.flag = flag;
+        this.typeOfService = typeOfService;
     }
 
     //Getters & Setters
@@ -117,5 +124,21 @@ public class IPV4Header {
 
     public String getDestinationAddress() {
         return this.destinationAddress;
+    }
+
+    public void setFlag(IPV4Flag flag) {
+        this.flag = flag;
+    }
+
+    public IPV4Flag getFlag() {
+        return this.flag;
+    }
+
+    public void setTypeOfService(TypeOfService typeOfService) {
+        this.typeOfService = typeOfService;
+    }
+
+    public TypeOfService getTypeOfService() {
+        return this.typeOfService;
     }
 }

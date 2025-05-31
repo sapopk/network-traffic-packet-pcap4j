@@ -106,7 +106,6 @@ public class NetworkService {
                 ipV4Packet.getHeader().getTos().value()
             );
 
-            // TODO : Complete IPV4Header
             IPV4Header ipv4Header = new IPV4Header(
                 ipV4Packet.getHeader().getVersion().value(),
                 ipV4Packet.getHeader().getIhl(),
@@ -121,6 +120,8 @@ public class NetworkService {
                 ipv4Flag,
                 typeOfService
             );
+
+            logger.setIpv4Header(ipv4Header);
         }
     }
 }
