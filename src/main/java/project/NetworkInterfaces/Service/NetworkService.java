@@ -18,6 +18,7 @@ import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.UdpPacket;
 
+import project.NetworkInterfaces.Model.IPv4Address;
 import project.NetworkInterfaces.Packet.PacketLogger;
 import project.NetworkInterfaces.Packet.Ethernet.EthernetHeader;
 import project.NetworkInterfaces.Packet.HEXStream.HexStream;
@@ -33,11 +34,15 @@ import project.NetworkInterfaces.Packet.Protocol.UDPHeader;
 public class NetworkService {
 
     private PacketLogger packetLogger = new PacketLogger();
-    private String TARGET_IP_ADDRESS = ""; // Paste your IP address here
-
+    private String TARGET_IP_ADDRESS;
+    
     public NetworkService() {}
 
-    public NetworkService(PacketLogger logger) {
+    public NetworkService(String iPv4Address) {
+        this.TARGET_IP_ADDRESS = iPv4Address;
+    }
+
+    public NetworkService(PacketLogger logger, String iPv4Address) {
         this.packetLogger = logger;
     }
 
