@@ -8,17 +8,13 @@ public class IPv4Address {
     public IPv4Address() {}
 
     public IPv4Address(String IPv4Address) {
-        if(!IPv4Address.matches(PATTERN)) {
-            this.validIPv4Address = false;
-        }
+        this.validIPv4Address = IPv4Address.matches(PATTERN);
         this.IPv4Address = IPv4Address;
     }
 
     //Getters & Setters
     public void setIPv4Address(String IPv4Address) {
-        if(!IPv4Address.matches(PATTERN)) {
-            this.validIPv4Address = false;
-        }
+        this.validIPv4Address = IPv4Address.matches(PATTERN);
         this.IPv4Address = IPv4Address;
     }
 

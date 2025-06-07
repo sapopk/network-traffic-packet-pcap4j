@@ -20,12 +20,10 @@ public class NetworkTrafficApplication {
         System.out.print("Enter option here: ");
         String option = scan.nextLine().toUpperCase();
 
-        while (!option.equals("A") || !option.equals("B")) {
+        while (!option.equals("A") && !option.equals("B")) {
             System.out.println("\nPlease, enter a value of A or B");
             System.out.print("Enter option here: ");
-            option = scan.nextLine();
-
-            if(option.equalsIgnoreCase("A") || option.equalsIgnoreCase("B")) break;
+            option = scan.nextLine().toUpperCase();
         }
 
         switch (option) {
@@ -36,7 +34,7 @@ public class NetworkTrafficApplication {
                 iPv4Address.setIPv4Address(scan.nextLine());
 
                 while(!iPv4Address.isValidIPv4Address()) {
-                    System.out.println("IPv4 Address is invalid or incorrect format.");
+                    System.out.print("\n IPv4 Address is invalid or incorrect format.");
                     System.out.print("\n Please, enter a valid IPV4 Addres: ");
                     iPv4Address.setIPv4Address(scan.nextLine());
 
