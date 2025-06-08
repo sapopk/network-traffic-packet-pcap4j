@@ -2,6 +2,8 @@ package project;
 
 import project.NetworkInterfaces.Model.IPv4Address;
 import project.NetworkInterfaces.Service.NetworkService;
+import project.NetworkInterfaces.Service.NetworkInterface;
+
 import java.util.Scanner;
 
 public class NetworkTrafficApplication {
@@ -46,9 +48,8 @@ public class NetworkTrafficApplication {
             break;
 
             case "B":
-            break;
-
-            default:
+                NetworkInterface networkInterface = new NetworkInterface();
+                networkInterface.getNetworkTrafficFromInterface();
             break;
         }
 
